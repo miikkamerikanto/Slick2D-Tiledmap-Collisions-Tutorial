@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
-<map version="0.99b" orientation="orthogonal" width="10" height="10" tilewidth="29" tileheight="34">
- <tileset name="snow" firstgid="1" tilewidth="29" tileheight="34">
-  <image source="snow.png"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="29" tileheight="34">
+ <tileset firstgid="1" name="snow" tilewidth="29" tileheight="34">
+  <image source="snow.png" width="128" height="128"/>
  </tileset>
- <tileset name="ice" firstgid="10" tilewidth="29" tileheight="34">
-  <image source="ice.png"/>
+ <tileset firstgid="13" name="ice" tilewidth="29" tileheight="34">
+  <image source="ice.png" width="128" height="128"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -51,9 +51,17 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Layer 0" width="10" height="10">
+ <layer name="Snow" width="10" height="10" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAONiYGDgIhKzAjEblMaG0dWhY3R17FBxdiR5ZLXI6tjR9LPiUcdGQB0rieqQ7calDh8mNnxBGAAqNB+OkAEAAA==
+   H4sIAAAAAAAAC2NkYGBgHMWDBgMAjw2X0pABAAA=
+  </data>
+ </layer>
+ <layer name="Ice" width="10" height="10">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+NlYGDgJRITAsjqsKnnJVIdNvOItReXneSqQ1dPrHnY3EcMBgB61aIrkAEAAA==
   </data>
  </layer>
 </map>

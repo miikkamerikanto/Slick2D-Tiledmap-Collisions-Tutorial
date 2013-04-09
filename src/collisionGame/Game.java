@@ -19,6 +19,7 @@ public class Game extends BasicGame {
     private static final int TILEHEIGHT = 34;
     private static final int NUMBEROFTILESINAROW = 10;
     private static final int NUMBEROFTILESINACOLUMN = 10;
+    private static final int NUMBEROFLAYERS = 2;
     private static final float SPEED = 0.2f;
 
     public Game() {
@@ -47,19 +48,19 @@ public class Game extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         Input input = container.getInput();
         if (input.isKeyDown(Input.KEY_UP)) {
-            if (!isBlocked(x + TILEWIDTH, y - delta * SPEED) && !isBlocked(x, y - delta * SPEED)) {
+            if (!isBlocked(x + TILEWIDTH -1, y - delta * SPEED) && !isBlocked(x + 1, y - delta * SPEED)) {
                 y -= delta * SPEED;
             }
         } else if (input.isKeyDown(Input.KEY_DOWN)) {
-            if (!isBlocked(x + TILEWIDTH, y + TILEHEIGHT + delta * SPEED) && !isBlocked(x, y + TILEHEIGHT + delta * SPEED)) {
+            if (!isBlocked(x + TILEWIDTH - 1, y + TILEHEIGHT + delta * SPEED) && !isBlocked(x + 1, y + TILEHEIGHT + delta * SPEED)) {
                 y += delta * SPEED;
             }
         } else if (input.isKeyDown(Input.KEY_LEFT)) {
-            if (!isBlocked(x - delta * SPEED, y) && !isBlocked(x - delta * SPEED, y + TILEHEIGHT)) {
+            if (!isBlocked(x - delta * SPEED, y + 1) && !isBlocked(x - delta * SPEED, y + TILEHEIGHT - 1)) {
                 x -= delta * SPEED;
             }
         } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-            if (!isBlocked(x + TILEWIDTH + delta * SPEED, y + TILEHEIGHT) && !isBlocked(x + TILEWIDTH + delta * SPEED, y)) {
+            if (!isBlocked(x + TILEWIDTH + delta * SPEED, y + TILEHEIGHT - 1) && !isBlocked(x + TILEWIDTH + delta * SPEED, y + 1)) {
                 x += delta * SPEED;
             }
         }
@@ -78,12 +79,15 @@ public class Game extends BasicGame {
     }
 
     private void initializeBlocked() {
-        for (int x = 0; x < NUMBEROFTILESINAROW; x++) {
-            for (int y = 0; y < NUMBEROFTILESINAROW; y++) {
-                int tileID = map.getTileId(x, y, 0);
-                String value = map.getTileProperty(tileID, "blocked", "false");
-                if (value.equals("true")) {
-                    blocked[x][y] = true;
+        for (int l = 0; l < NUMBEROFLAYERS; l++) {
+            String layerValue = map.getLayerProperty(l, "blocked", "false");
+            if (layerValue.equals("true")) {
+                for (int c = 0; c < NUMBEROFTILESINACOLUMN; c++) {
+                    for (int r = 0; r < NUMBEROFTILESINAROW; r++) {
+                        if (map.getTileId(c, r, l) != 0) {
+                            blocked[c][r] = true;
+                        }
+                    }
                 }
             }
         }
